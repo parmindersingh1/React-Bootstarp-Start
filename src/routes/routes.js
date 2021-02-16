@@ -26,8 +26,18 @@ const GoogleMap = React.lazy(() => import('../Demo/Maps/GoogleMap/index'));
 const OtherSamplePage = React.lazy(() => import('../Demo/Other/SamplePage'));
 const OtherDocs = React.lazy(() => import('../Demo/Other/Docs'));
 
+const EventRegistry = React.lazy(() =>
+  import("../views/event-registry-updated/EventRegistryPageUpdated")
+);
+
 const routes = [
-    { path: '/dashboard/default', exact: true, name: 'Default', component: DashboardDefault },
+    {
+        path: "/events",
+        exact: true,
+        name: "Default",
+        component: EventRegistry,
+      },
+    // { path: '/dashboard/default', exact: true, name: 'Default', component: DashboardDefault },
     { path: '/basic/button', exact: true, name: 'Basic Button', component: UIBasicButton },
     { path: '/basic/badges', exact: true, name: 'Basic Badges', component: UIBasicBadges },
     { path: '/basic/breadcrumb-paging', exact: true, name: 'Basic Breadcrumb Pagination', component: UIBasicBreadcrumbPagination },
