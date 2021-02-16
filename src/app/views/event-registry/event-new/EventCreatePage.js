@@ -1,19 +1,12 @@
 import { Col, Row } from "reactstrap";
 import React, { Component } from "react";
-import { createEvent } from "../../../_redux/event-registry/eventRegistryAction";
+import { createEvent } from "../../../../store/event-registry/eventRegistryAction";
 import { connect } from "react-redux";
-import EventFormUpdates from "../event-formUpdated/EventFormUpdated";
-import Toast from "../../../utils/Toast";
-// import axiosWithoutAuth from "../../../../redux/axiosWithoutAuth";
-import {
-  // allMainTypes,
-  // allSubTypes,
-  getInputClasses,
-  // getInputNoPaddingClasses,
-  // isValidURL,
-} from "../../../utils/formUtils";
+import EventForm from "../event-form/EventForm";
+import Toast from "../../../../utils/Toast";
 
-class EventCreatePageUpdated extends Component {
+
+class EventCreatePage extends Component {
   state = {
     fileLoaded: false,
     event: null,
@@ -50,11 +43,11 @@ class EventCreatePageUpdated extends Component {
                     className="btn btn-primary"
                     onClick={this.goBack}
                   >
-                    <i className="ti ti-arrow-left"></i> Back
+                    <i className="feather icon-arrow-left"></i> Back
                   </button>
                 </div>
               </div>
-              <EventFormUpdates
+              <EventForm
                 handleSubmit={this.handleSubmit}
                 loading={false}
                 isEdit={false}
@@ -76,4 +69,4 @@ const mapActionsToProps = {
   createEvent,
 };
 
-export default connect(null, mapActionsToProps)(EventCreatePageUpdated);
+export default connect(null, mapActionsToProps)(EventCreatePage);

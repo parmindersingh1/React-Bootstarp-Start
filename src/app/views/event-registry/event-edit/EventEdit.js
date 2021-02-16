@@ -3,11 +3,11 @@ import React, { useEffect, useState } from "react";
 import {
   getEventbyId,
   updateEvent,
-} from "../../../_redux/event-registry/eventRegistryAction";
+} from "../../../../store/event-registry/eventRegistryAction";
 import { connect } from "react-redux";
 
-import EventFormUpdated from "../event-formUpdated/EventFormUpdated";
-import Toast from "../../../utils/Toast";
+import EventForm from "../event-form/EventForm";
+import Toast from "../../../../utils/Toast";
 
 const EventEditPage = (props) => {
   const [event, setEvent] = useState(null);
@@ -60,12 +60,12 @@ const EventEditPage = (props) => {
                 className="btn btn-primary"
                 onClick={goBack}
               >
-                <i className="ti ti-arrow-left"></i> Back
+                <i className="feather icon-arrow-left"></i> Back
               </button>
             </div>
           </div>
           {event && (
-            <EventFormUpdated
+            <EventForm
               data-test="test-edit-event"
               event={props.events}
               handleSubmit={handleSubmit}

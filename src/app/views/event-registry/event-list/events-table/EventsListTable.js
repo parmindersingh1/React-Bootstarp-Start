@@ -5,11 +5,11 @@ import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory, {
   PaginationProvider,
 } from "react-bootstrap-table2-paginator";
-import { Pagination } from "../../../../app/components/pagination/Pagination";
+import { Pagination } from "../../../../components/pagination/Pagination";
 import {
   NoRecordsFoundMessage,
   PleaseWaitMessage,
-} from "../../../../app/components/pagination/TablePaginationHelpers";
+} from "../../../../components/pagination/TablePaginationHelpers";
 import * as columnFormatters from "./ActionsColumnFormatter";
 
 const EventsListTableUpdated = (props) => {

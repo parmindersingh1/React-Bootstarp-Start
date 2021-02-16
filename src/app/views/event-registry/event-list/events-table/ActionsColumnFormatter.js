@@ -5,7 +5,7 @@
 import React from "react";
 import SVG from "react-inlinesvg";
 import { Tooltip } from "reactstrap";
-import { toAbsoluteUrl } from "../../../../utils/AssetsHelper";
+import { toAbsoluteUrl } from "../../../../../utils/AssetsHelper";
 
 export function ActionsColumnFormatter(
   cellContent,

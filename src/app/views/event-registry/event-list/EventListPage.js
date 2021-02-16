@@ -3,14 +3,14 @@ import React, { Component } from "react";
 import {
   deleteEventData,
   getAllEvents,
-} from "../../../_redux/event-registry/eventRegistryAction";
+} from "../../../../store/event-registry/eventRegistryAction";
 import { connect } from "react-redux";
-import EventsListTableUpdated from "./events-tableUpdated/EventsListTableUpdated";
+import EventsListTable from "./events-table/EventsListTable";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-import Toast from "../../../utils/Toast";
+import Toast from "../../../../utils/Toast";
 
-class EventListPageUpdated extends Component {
+class EventListPage extends Component {
   state = {
     eventRegistries: [],
     loading: false,
@@ -80,14 +80,14 @@ class EventListPageUpdated extends Component {
                     className="btn btn-primary"
                     to="/events/new"
                   >
-                    <i className="ti ti-plus"></i> Add Event
+                    <i className="feather icon-plus"></i> Add Event
                   </Link>
                   <button
                     color="primary"
                     className="btn btn-primary ml-2"
                     onClick={this.refreshContent}
                   >
-                    <i className="ti ti-reload"></i> Refresh
+                    <i className="feather icon-refresh-cw"></i> Refresh
                   </button>
                 </div>
               </div>
@@ -99,7 +99,7 @@ class EventListPageUpdated extends Component {
                       {/* <CardSubtitle>Overview of Latest Month</CardSubtitle> */}
                     </div>
                   </div>
-                  <EventsListTableUpdated
+                  <EventsListTable
                     eventRegistries={this.state.eventRegistries}
                     loading={this.state.loading}
                     onDeleteEventRegistry={this.onDeleteEventRegistry}
@@ -115,8 +115,8 @@ class EventListPageUpdated extends Component {
   }
 }
 const mapStateToProps = (state) => ({
-  // loading: state.events.loading,
-  // error: state.events.error,
+  // loading: state.simulations.loading,
+  // error: state.simulations.error,
   // events: state.events.events,
 });
 
@@ -128,4 +128,4 @@ const mapActionsToProps = {
 export default connect(
   mapStateToProps,
   mapActionsToProps
-)(EventListPageUpdated);
+)(EventListPage);

@@ -8,18 +8,18 @@ import {
   CardHeader,
   CardTitle,
 } from "reactstrap";
-import { Input } from "../../../app/components/forms/Input";
+import { Input } from "../../../components/forms/Input";
 import {
-  // allMainTypes,
-  // allSubTypes,
+  allMainTypes,
+  allSubTypes,
   getInputClasses,
-  // getInputNoPaddingClasses,
-  // isValidURL,
-} from "../../../utils/formUtils";
-import Toast from "../../../utils/Toast";
-// import axiosWithoutAuth from "../../../../redux/axiosWithoutAuth";
+  getInputNoPaddingClasses,
+  isValidURL,
+} from "../../../../utils/formUtils";
+import Toast from "../../../../utils/Toast";
+import axiosWithoutAuth from "../../../../store/axiosWithoutAuth";
 
-const EventFormUpdated = ({
+const EventForm = ({
   // className,
   handleSubmit,
   loading,
@@ -29,67 +29,69 @@ const EventFormUpdated = ({
 }) => {
   const loadSchemaFile = async (schemaFile, setFieldValue) => {
     if (schemaFile) {
-      if (schemaFile) {
+      if (!isValidURL(schemaFile)) {
         Toast.errorMsg("Invalid Url");
       }
-      // try {
-      //   const { data } = await axiosWithoutAuth.get(schemaFile);
-      //   console.log("data", data);
-      //   populateSchema(data, setFieldValue);
-      //   Toast.successMsg("Schema loaded succesfully");
-      // } catch (error) {
-      //   console.log("errr1", error);
-      //   Toast.errorMsg("Error fetching schema");
-      // }
+      try {
+        const { data } = await axiosWithoutAuth.get(schemaFile);
+        console.log("data", data);
+        populateSchema(data, setFieldValue);
+        Toast.successMsg("Schema loaded succesfully");
+      } catch (error) {
+        console.log("errr1", error);
+        Toast.errorMsg("Error fetching schema");
+      }
     }
   };
 
   const populateSchema = (data, setFieldValue) => {
-    // const jsonData = {
-    //   entities: [],
-    //   entityProperties: {},
-    //   properties: [],
-    // };
-    // data.properties.forEach((prop) => {
-    //   jsonData.properties.push({
-    //     name: prop.name,
-    //     quantity: {
-    //       type: prop.jfQuantity,
-    //       subType: allSubTypes.includes(prop.jfQuantityChild)
-    //         ? prop.jfQuantityChild
-    //         : allMainTypes[prop.jfQuantity][0],
-    //       SubTypes: allMainTypes[prop.jfQuantity],
-    //     },
-    //   });
-    // });
-    // data.entities.forEach((entity) => {
-    //   jsonData.entities.push(entity.name);
-    //   jsonData.entityProperties[entity.name] = entity.properties.map(
-    //     (prop) => prop.name
-    //   );
-    //   entity.properties.forEach((prop) => {
-    //     jsonData.properties.push({
-    //       name: `${entity.name}.${prop.name}`,
-    //       quantity: {
-    //         type: prop.jfQuantity,
-    //         subType: allSubTypes.includes(prop.jfQuantityChild)
-    //           ? prop.jfQuantityChild
-    //           : allMainTypes[prop.jfQuantity][0],
-    //         SubTypes: allMainTypes[prop.jfQuantity],
-    //       },
-    //     });
-    //   });
-    // });
-    // setFieldValue("logSchema", {
-    //   ...jsonData,
-    // });
-    // setFieldValue("vertical", data.vertical);
-    // setFieldValue("interaction", data.interaction);
-    // setFieldValue("logName", data.log_name);
-    // setFieldValue(
-    //   "input_topic",
-    //   `${data.vertical}-${data.log_name}-${data.interaction}`
-    // );
+    const jsonData = {
+      entities: [],
+      entityProperties: {},
+      properties: [],
+    };
+
+    data.properties.forEach((prop) => {
+      jsonData.properties.push({
+        name: prop.name,
+        quantity: {
+          type: prop.jfQuantity,
+          subType: allSubTypes.includes(prop.jfQuantityChild)
+            ? prop.jfQuantityChild
+            : allMainTypes[prop.jfQuantity][0],
+          SubTypes: allMainTypes[prop.jfQuantity],
+        },
+      });
+    });
+
+    data.entities.forEach((entity) => {
+      jsonData.entities.push(entity.name);
+      jsonData.entityProperties[entity.name] = entity.properties.map(
+        (prop) => prop.name
+      );
+      entity.properties.forEach((prop) => {
+        jsonData.properties.push({
+          name: `${entity.name}.${prop.name}`,
+          quantity: {
+            type: prop.jfQuantity,
+            subType: allSubTypes.includes(prop.jfQuantityChild)
+              ? prop.jfQuantityChild
+              : allMainTypes[prop.jfQuantity][0],
+            SubTypes: allMainTypes[prop.jfQuantity],
+          },
+        });
+      });
+    });
+    setFieldValue("logSchema", {
+      ...jsonData,
+    });
+    setFieldValue("vertical", data.vertical);
+    setFieldValue("interaction", data.interaction);
+    setFieldValue("logName", data.log_name);
+    setFieldValue(
+      "input_topic",
+      `${data.vertical}-${data.log_name}-${data.interaction}`
+    );
   };
 
   const initialValues = () => {
@@ -199,9 +201,9 @@ const EventFormUpdated = ({
                                 <input
                                   type="url"
                                   {...field}
-                                  // className={`${getInputNoPaddingClasses(
-                                  //   meta
-                                  // )}`}
+                                  className={`${getInputNoPaddingClasses(
+                                    meta
+                                  )}`}
                                   placeholder="Enter Url"
                                 />
 
@@ -364,4 +366,4 @@ const EventFormUpdated = ({
   );
 };
 
-export default EventFormUpdated;
+export default EventForm;
