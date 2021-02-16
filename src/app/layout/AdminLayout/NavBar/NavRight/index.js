@@ -18,7 +18,7 @@ class NavRight extends Component {
         return (
             <Aux>
                 <ul className="navbar-nav ml-auto">
-                    <li>
+                    {/* <li>
                         <Dropdown alignRight={!this.props.rtlLayout}>
                             <Dropdown.Toggle variant={'link'} id="dropdown-basic">
                                 <i className="icon feather icon-bell"/>
@@ -77,7 +77,7 @@ class NavRight extends Component {
                     </li>
                     <li className={this.props.rtlLayout ? 'm-r-15' : 'm-l-15'}>
                         <a href={DEMO.BLANK_LINK} className="displayChatbox" onClick={() => {this.setState({listOpen: true});}}><i className="icon feather icon-mail"/></a>
-                    </li>
+                    </li> */}
                     <li>
                         <Dropdown alignRight={!this.props.rtlLayout} className="drp-user">
                             <Dropdown.Toggle variant={'link'} id="dropdown-basic">
