@@ -10,9 +10,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
 import config from "./config";
-import setupAxios from "./utils/setupAxios";
+import initApp from "./utils/initApp";
 
-setupAxios(axios);
+initApp(store, axios);
 
 const app = (
   <Provider store={store}>
