@@ -12,7 +12,7 @@ import Loader from "../Loader";
 import NavBar from './NavBar';
 import Navigation from './Navigation';
 import {connect} from 'react-redux';
-import routes from "../../../routes";
+import routes from "../../../routes/routes";
 import windowSize from 'react-window-size';
 
 class AdminLayout extends Component {
