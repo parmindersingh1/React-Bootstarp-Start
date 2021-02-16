@@ -1,11 +1,12 @@
+import { hideLoader, loading, showLoader } from "../store/loader/actions";
+
 import { env } from "../env";
-import { loading } from "../store/loader/actions";
 
 export default function initApp(store, axios) {
   axios.defaults.baseURL = env.exchangeUrl;
   axios.interceptors.request.use(
     (config) => {
-      store.dispatch(loading(true));
+      store.dispatch(showLoader());
       return config;
     },
     (err) => Promise.reject(err)
@@ -13,7 +14,7 @@ export default function initApp(store, axios) {
 
   axios.interceptors.response.use(
     (response) => {
-      store.dispatch(loading(false));
+      store.dispatch(hideLoader());
 
       return response;
     },
@@ -21,7 +22,7 @@ export default function initApp(store, axios) {
       // if (error && error.response && 401 === error.response.status) {
       //   store.dispatch({ type: actionTypes.Logout });
       // }
-      store.dispatch(loading(false));
+      store.dispatch(hideLoader());
       return Promise.reject({ ...error });
     }
   );
