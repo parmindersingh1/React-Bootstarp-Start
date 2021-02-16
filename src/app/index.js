@@ -7,8 +7,6 @@ import Aux from "../hoc/_Aux";
 import Loadable from "react-loadable";
 import Loader from "./layout/Loader";
 import ScrollToTop from "./layout/ScrollToTop";
-import { connect } from "react-redux";
-import { loading } from "../store/loader/actions";
 import routes from "../routes/route";
 
 const AdminLayout = Loadable({
@@ -32,7 +30,6 @@ class App extends Component {
 
     return (
       <Aux>
-        {this.props.loader ? <Loader /> : null}
         <ScrollToTop>
           <Suspense fallback={<Loader />}>
             <Switch>
@@ -46,14 +43,4 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    loader: state.loader,
-  };
-};
-
-const mapActionsToProps = {
-  loading,
-};
-
-export default connect(mapStateToProps, mapActionsToProps)(App);
+export default App;

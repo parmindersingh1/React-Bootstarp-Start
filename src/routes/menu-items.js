@@ -7,7 +7,7 @@ export default {
             icon: "icon-navigation",
             children: [
               {
-                id: "dashboard",
+                id: "events",
                 title: "Events",
                 type: "item",
                 url: "/events",

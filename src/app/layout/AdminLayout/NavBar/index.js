@@ -4,6 +4,7 @@ import React, {Component} from 'react';
 
 import Aux from "../../../../hoc/_Aux";
 import DEMO from "../../../../store/layout/constant";
+import LoadingSplashScreen from "../Loading/LoadingSplashScreen";
 import NavLeft from "./NavLeft";
 import NavRight from "./NavRight";
 import {connect} from 'react-redux';
@@ -22,6 +23,7 @@ class NavBar extends Component {
 
         return (
             <Aux>
+                <LoadingSplashScreen />
                 <header className={headerClass.join(' ')}>
                     <div className="m-header">
                         <a className={toggleClass.join(' ')} id="mobile-collapse1" href={DEMO.BLANK_LINK} onClick={this.props.onToggleNavigation}><span/></a>

@@ -5,7 +5,7 @@ window.jQuery = $;
 window.$ = $;
 global.jQuery = $;
 
-const DashboardDefault = React.lazy(() => import('../Demo/Dashboard/Default'));
+// const DashboardDefault = React.lazy(() => import('../Demo/Dashboard/Default'));
 
 const UIBasicButton = React.lazy(() => import('../Demo/UIElements/Basic/Button'));
 const UIBasicBadges = React.lazy(() => import('../Demo/UIElements/Basic/Badges'));
@@ -34,22 +34,22 @@ const routes = [
     {
         path: "/events",
         exact: true,
-        name: "Default",
+        name: "Events",
         component: EventRegistry,
       },
     // { path: '/dashboard/default', exact: true, name: 'Default', component: DashboardDefault },
-    { path: '/basic/button', exact: true, name: 'Basic Button', component: UIBasicButton },
-    { path: '/basic/badges', exact: true, name: 'Basic Badges', component: UIBasicBadges },
-    { path: '/basic/breadcrumb-paging', exact: true, name: 'Basic Breadcrumb Pagination', component: UIBasicBreadcrumbPagination },
-    { path: '/basic/collapse', exact: true, name: 'Basic Collapse', component: UIBasicCollapse },
-    { path: '/basic/tabs-pills', exact: true, name: 'Basic Tabs & Pills', component: UIBasicTabsPills },
-    { path: '/basic/typography', exact: true, name: 'Basic Typography', component: UIBasicBasicTypography },
-    { path: '/forms/form-basic', exact: true, name: 'Forms Elements', component: FormsElements },
-    { path: '/tables/bootstrap', exact: true, name: 'Bootstrap Table', component: BootstrapTable },
-    { path: '/charts/nvd3', exact: true, name: 'Nvd3 Chart', component: Nvd3Chart },
-    { path: '/maps/google-map', exact: true, name: 'Google Map', component: GoogleMap },
-    { path: '/sample-page', exact: true, name: 'Sample Page', component: OtherSamplePage },
-    { path: '/docs', exact: true, name: 'Documentation', component: OtherDocs },
+    { path: '/basic/button', exact: false, name: 'Basic Button', component: UIBasicButton },
+    { path: '/basic/badges', exact: false, name: 'Basic Badges', component: UIBasicBadges },
+    { path: '/basic/breadcrumb-paging', exact: false, name: 'Basic Breadcrumb Pagination', component: UIBasicBreadcrumbPagination },
+    { path: '/basic/collapse', exact: false, name: 'Basic Collapse', component: UIBasicCollapse },
+    { path: '/basic/tabs-pills', exact: false, name: 'Basic Tabs & Pills', component: UIBasicTabsPills },
+    { path: '/basic/typography', exact: false, name: 'Basic Typography', component: UIBasicBasicTypography },
+    { path: '/forms/form-basic', exact: false, name: 'Forms Elements', component: FormsElements },
+    { path: '/tables/bootstrap', exact: false, name: 'Bootstrap Table', component: BootstrapTable },
+    { path: '/charts/nvd3', exact: false, name: 'Nvd3 Chart', component: Nvd3Chart },
+    { path: '/maps/google-map', exact: false, name: 'Google Map', component: GoogleMap },
+    { path: '/sample-page', exact: false, name: 'Sample Page', component: OtherSamplePage },
+    { path: '/docs', exact: false, name: 'Documentation', component: OtherDocs },
 ];
 
 export default routes;
