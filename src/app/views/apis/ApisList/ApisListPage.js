@@ -1,6 +1,7 @@
 import { Card, CardBody, CardTitle, Col, Row } from 'reactstrap';
 import React, { Component } from 'react';
-import { deleteApiData, fetchConfigs } from '../store/apiCrud';
+// import { deleteApiData, fetchConfigs } from '../store/apiCrud';
+import {deleteApiData, fetchConfigs }from "../../../../store/api-registry/apiRegistryAction"
 
 import ApiInputModal from './apis-modal/ApiInputModal';
 import ApiOutputModal from './apis-modal/ApiOutputModal';
@@ -9,6 +10,7 @@ import { Link } from 'react-router-dom';
 import SockJsClient from 'react-stomp';
 import Toast from '../../../../utils/Toast';
 import { env } from '../../../../env';
+import { connect } from 'react-redux';
 
 class ApisListPage extends Component {
   state = {
@@ -21,30 +23,31 @@ class ApisListPage extends Component {
   };
   componentDidMount() {
     this.setState({ loading: true });
-    fetchConfigs().then((response) => {
+    this.props.fetchConfigs()
       try {
-        console.log('fetchConfigs', response.data);
-      this.setState({ apiConfigs: response.data });
+        console.log('fetchConfigs', this.props.apis);
+      this.setState({ apiConfigs: this.props.apis });
       this.setState({ loading: false });
       } catch (error) {
         console.log(error)
       }
       
-    });
+   
   }
 
   refreshContent = () => {
     this.setState({ loading: true });
-    fetchConfigs().then((response) => {
-      console.log('fetchRefreshConfigs', response.data);
-      this.setState({ apiConfigs: response.data });
+    this.props.fetchConfigs()
+      // .then((response) => {
+      console.log('fetchRefreshConfigs', this.props.apis);
+      this.setState({ apiConfigs: this.props.apis });
       this.setState({ loading: false });
-    });
+    // });
   }
 
   handleStatusUpdate = (apiData) => {
     console.log(apiData); // {id, type, status}
-    const tempApiConfigs = this.state.apiConfigs.map((item) => {
+    const tempApiConfigs = this.props.apis.map((item) => {
       if (item.id === apiData.id) {
         const tempItem = { ...apiData };
         // if (apiData.type === "API_STATUS") {
@@ -89,14 +92,16 @@ class ApisListPage extends Component {
 
   onDeleteApi = (id) => {
     try {
-      deleteApiData(id).then((response) => {
-        console.log(response.data);
+      this.props.deleteApiData(id)
+        // .then((response) => {
+        console.log(id);
         Toast.successMsg('Api Deleted successfully');
-        fetchConfigs().then((response) => {
-          this.setState({ apiConfigs: response.data });
+        this.props.fetchConfigs()
+        // .then((response) => {
+          this.setState({ apiConfigs: this.props.apis });
           this.setState({ loading: false });
-        });
-      });
+        // });
+      // });
     } catch (error) {
       Toast.errorMsg('something went wrong');
     }
@@ -147,12 +152,12 @@ class ApisListPage extends Component {
                 <CardBody>
                   <div className='d-flex align-items-center'>
                     <div>
-                      <CardTitle>Apis</CardTitle>
+                      <CardTitle>Api Registries</CardTitle>
                       {/* <CardSubtitle>Overview of Latest Month</CardSubtitle> */}
                     </div>
                   </div>
                   <ApisListTable
-                    apiConfigs={this.state.apiConfigs}
+                    apiConfigs={this.props.apis}
                     loading={this.state.loading}
                     onDeleteApi={this.onDeleteApi}
                     onEditApi={this.onEditApi}
@@ -183,4 +188,12 @@ class ApisListPage extends Component {
   }
 }
 
-export default ApisListPage;
+const mapStateToProps = (state) => ({
+  apis: state.api.apis,
+});
+const mapActionsToProps = {
+  deleteApiData,
+  fetchConfigs,
+};
+
+export default connect(mapStateToProps, mapActionsToProps)(ApisListPage);

@@ -5,8 +5,10 @@ import { Field } from "formik";
 import { Input } from "../../../../components/forms/Input";
 import InputTypeTable from "../steps/types-table/InputTypeTable";
 import PropTypes from "prop-types";
+import { connect } from 'react-redux'
 import { getInputClasses } from "../../../../../utils/formUtils";
-import { searchInputType } from "../../store/apiCrud";
+// import { searchInputType } from "../../store/apiCrud";
+import { searchInputType } from "../../../../../store/api-registry/apiRegistryAction";
 
 const ApiInput = (props) => {
   const [tableLength, setTableLength] = useState(false);
@@ -40,23 +42,24 @@ const ApiInput = (props) => {
     if (!inputValue || inputValue.length < 3) return Promise.resolve([]);
     return new Promise((resolve) => {
       console.log(inputValue);
-      searchInputType(inputValue)
-        .then((resp) => {
-          console.log("resp for search expert", resp);
+      props.searchInputType(inputValue)
+        console.log(props.apis)
+        // .then((resp) => {
+          console.log("resp for search expert", props.apis);
           // resolve(
           //   resp.data.map((protoName) => ({
           //     label: protoName,
           //     value: protoName,
           //   }))
-          const result = Array.isArray(resp.data) ? resp.data : [resp.data];
+          const result = Array.isArray(props.inputTypes) ? props.inputTypes : [props.inputTypes];
           console.log(result);
           resolve(
             result.map((proto) => ({
               label: proto,
               value: proto,
             }))
-          );
-        })
+          )
+        // })
         .catch((err) => {
           resolve([]);
         });
@@ -171,4 +174,11 @@ ApiInput.propTypes = {
   onDeleteType: PropTypes.func,
 };
 
-export default ApiInput;
+const mapStateToProps = (state) => ({
+  inputTypes: state.api.inputType,
+});
+const mapActionsToProps = {
+  searchInputType
+};
+
+export default connect(mapStateToProps,mapActionsToProps)(ApiInput);

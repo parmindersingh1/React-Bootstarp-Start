@@ -2,7 +2,7 @@ export default {
   items: [
     {
       id: "registry",
-      title: "Registry",
+      title: "Registries",
       type: "group",
       icon: "icon-navigation",
       children: [

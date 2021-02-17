@@ -3,8 +3,10 @@ import React, { useState, useEffect, useRef } from "react";
 import SockJsClient from "react-stomp";
 
 import SplitterTable from "./splitter-table/SplitterTable";
+import { connect } from 'react-redux'
 import { env } from "../../../../env";
-import { getApibyId } from "../store/apiCrud";
+// import { getApibyId } from "../store/apiCrud";
+import { getApibyId } from "../../../../store/api-registry/apiRegistryAction";
 
 const SplitterListPage = (props) => {
   const [splitterData, setSplitterData] = useState([]);
@@ -12,12 +14,16 @@ const SplitterListPage = (props) => {
   const [apiId, setApiId] = useState(props.match.params.id);
   let clientRef = useRef();
 
-  const getSplittersData = async () => {
+  const getSplittersData = () => {
+    props.getApibyId(apiId).then((res) => {
+      setSplitterData([res.data]);
+      console.log(res.data)
+    })
     /* fetchSplittersData function Yet to be define */
-    const apiData = await getApibyId(apiId);
+    // const apiData = await getApibyId(apiId);
     // const splittersData = await fetchSplittersData()
     // setAppQueueData(splittersData.data)
-    setSplitterData([apiData.data]);
+    // setSplitterData([apiData.data]);
   };
 
   const handleStatusUpdate = (data) => {
@@ -83,4 +89,11 @@ const SplitterListPage = (props) => {
   );
 };
 
-export default SplitterListPage;
+const mapStateToProps = (state) => ({
+  api: state.api.apiRegistry,
+});
+const mapActionsToProps = {
+  getApibyId
+};
+
+export default connect(mapStateToProps,mapActionsToProps)(SplitterListPage);

@@ -6,7 +6,9 @@ import { Input } from "../../../../components/forms/Input";
 import OutputTypeTable from "../steps/types-table/OutputTypeTable";
 import PropTypes from "prop-types";
 import { getInputClasses } from "../../../../../utils/formUtils";
-import { searchInputType } from "../../store/apiCrud";
+// import { searchInputType } from "../../store/apiCrud";
+import { connect } from 'react-redux'
+import { searchInputType } from "../../../../../store/api-registry/apiRegistryAction";
 
 const ApiOutput = (props) => {
   const [tableLength, setTableLength] = useState(false);
@@ -23,22 +25,22 @@ const ApiOutput = (props) => {
     return new Promise((resolve) => {
       console.log(inputValue);
 
-      searchInputType(inputValue)
-        .then((resp) => {
-          console.log("resp for search expert", resp);
+      props.searchInputType(inputValue)
+        // .then((resp) => {
+        //   console.log("resp for search expert", resp);
           // resolve(
           //   resp.data.map((protoName) => ({
           //     label: protoName,
           //     value: protoName,
           //   }))
-          const result = Array.isArray(resp.data) ? resp.data : [resp.data];
+          const result = Array.isArray(props.outputTypes) ? props.outputTypes : [props.outputTypes];
           resolve(
             result.map((proto) => ({
               label: proto,
               value: proto,
             }))
-          );
-        })
+          )
+        // })
         .catch((err) => {
           resolve([]);
         });
@@ -128,4 +130,11 @@ ApiOutput.propTypes = {
   onDeleteType: PropTypes.func,
 };
 
-export default ApiOutput;
+const mapStateToProps = (state) => ({
+  outputTypes: state.api.inputType,
+});
+const mapActionsToProps = {
+  searchInputType
+};
+
+export default connect(mapStateToProps, mapActionsToProps)(ApiOutput);

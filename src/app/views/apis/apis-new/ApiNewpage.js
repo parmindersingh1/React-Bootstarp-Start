@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 
 import ApiCreatePage from '../ApiCreate/ApiCreatePage';
 import Toast from '../../../../utils/Toast';
-import { createConfig } from '../store/apiCrud';
+// import { createConfig } from '../store/apiCrud';
+import { connect } from 'react-redux'
+import { createConfig } from '../../../../store/api-registry/apiRegistryAction'
 
 class ApiNewpage extends Component {
   state = {
@@ -57,21 +59,26 @@ class ApiNewpage extends Component {
 
     console.log(apiData)
 
-    createConfig(apiData)
-      .then((response) => {
-        console.log('response create exam', response);
+   
+    try {
+      this.props.createConfig(apiData).then((res) => {
+        console.log(res)
         actions.setSubmitting(false);
-        setStepNumber(0);
-        window.scrollTo(0, 0);
-        Toast.successMsg('Api saved successfully');
-        this.props.history.goBack();
+      setStepNumber(0);
+      window.scrollTo(0, 0);
+      Toast.successMsg('Api saved successfully');
+      this.props.history.goBack();
       })
-      .catch((error) => {
-        actions.setSubmitting(false);
+      // console.log('response create exam', response);
+      
+    } catch (error) {
+      actions.setSubmitting(false);
         console.log(error)
         Toast.errorMsg('Something went wrong');
         window.scrollTo(0, 0);
-      });
+    }
+
+     
   };
 
   // showMessage(message, type) {
@@ -93,5 +100,8 @@ class ApiNewpage extends Component {
     );
   }
 }
+const mapActionsToProps = {
+  createConfig
+}
 
-export default ApiNewpage;
+export default connect(null, mapActionsToProps)(ApiNewpage);

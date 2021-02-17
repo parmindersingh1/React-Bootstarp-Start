@@ -209,9 +209,9 @@ const ApisListTable = (props) => {
   ];
   return (
     <>
-      <div className='mb-3'>
+      {/* <div className='mb-3'>
         <ApisFilter applyFilter={applyFilter} initialValues={initialValues} />
-      </div>
+      </div> */}
       <PaginationProvider
         pagination={paginationFactory({
           custom: true,

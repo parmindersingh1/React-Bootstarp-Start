@@ -1,11 +1,11 @@
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import React, { useEffect, useState } from "react";
-
+import { connect } from 'react-redux'
 import JSONPretty from "react-json-pretty";
 import Toast from "../../../utils/Toast";
-import { getProtoDef } from "../../views/apis/store/apiCrud";
+import { getProtoDef } from "../../../store/api-registry/apiRegistryAction";
 
-const ProtoViewModal = ({ handleClose, show, protoType }) => {
+const ProtoViewModal = ({ handleClose, show, protoType,getProtoDef }) => {
   const [protoData, setProtoData] = useState("");
 
   // const handleClose = () => setShow(false);
@@ -45,4 +45,9 @@ const ProtoViewModal = ({ handleClose, show, protoType }) => {
   );
 };
 
-export default ProtoViewModal;
+
+const mapActionsToProps = {
+  getProtoDef
+};
+
+export default connect(null, mapActionsToProps)(ProtoViewModal);

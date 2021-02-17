@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { env } from '../../../../env';
+// import { env } from '../../../../env';
 
 export function fetchConfigs() {
   return axios.get(`apiRegistry`);

@@ -23,11 +23,11 @@ class EventListPage extends Component {
   }
   refreshContent = () => {
     this.setState({ loading: true });
-    getAllEvents().then((response) => {
-      console.log("fetchRefreshRegistries", response.data);
-      this.setState({ eventRegistries: response.data, loading: false });
+    getAllEvents()
+      console.log("fetchRefreshRegistries", this.props.events);
+      this.setState({ eventRegistries: this.props.events, loading: false });
       // this.setState({ loading: false });
-    });
+    // });
   };
   componentDidUpdate(prevProps) {
     if (prevProps.events !== this.props.events) {
@@ -115,9 +115,9 @@ class EventListPage extends Component {
   }
 }
 const mapStateToProps = (state) => ({
-  // loading: state.simulations.loading,
-  // error: state.simulations.error,
-  // events: state.events.events,
+  loading: state.events.loading,
+  error: state.events.error,
+  events: state.events.events,
 });
 
 const mapActionsToProps = {

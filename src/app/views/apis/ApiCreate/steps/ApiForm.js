@@ -4,7 +4,7 @@ import Creatable from "react-select/creatable";
 import { Input } from "../../../../components/forms/Input";
 import { Select } from "../../../../components/forms/Select";
 import { getInputClasses } from "../../../../../utils/formUtils";
-import { checkIfApiExists } from "../../store/apiCrud";
+import { checkIfApiExists } from "../../../../../store/api-registry/apiRegistryCrud";
 import PropTypes from "prop-types";
 
 const ApiForm = ({ apiInfo, isApiUnique, setIsApiUnique }) => {

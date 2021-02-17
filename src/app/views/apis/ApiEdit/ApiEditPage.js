@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { getApibyId, updateConfig } from "../store/apiCrud";
+// import { getApibyId, updateConfig } from "../store/apiCrud";
 
+import { getApibyId, updateConfig } from "../../../../store/api-registry/apiRegistryAction";
+import { connect } from "react-redux"
 import ApiCreatePage from "../ApiCreate/ApiCreatePage";
 import Toast from "../../../../utils/Toast";
 
@@ -11,11 +13,17 @@ const ApiEditPage = (props) => {
 
   useEffect(() => {
     setLoading(true);
-    getApibyId(apiId).then((response) => {
-      setApiData(response.data);
-      setLoading(false);
-    });
+    props.getApibyId(apiId).then((res) => {
+      setApiData(res.data);
+      console.log(res.data)
+    })
+    
+    setLoading(false);
+    
+   
+    // });
   }, [apiId]);
+
 
   const setApiData = (apiInfo) => {
     const tempApiInfo = {
@@ -68,21 +76,19 @@ const ApiEditPage = (props) => {
     // Toast.errorMsg("Api Not Intergated Yet");
     // props.history.push("/apis");
 
-    updateConfig(apiId, apiData)
-      .then((response) => {
-        console.log("response create exam", response);
-        actions.setSubmitting(false);
-        setStepNumber(0);
-        window.scrollTo(0, 0);
-        Toast.successMsg("Api updated successfully");
-        props.history.goBack();
-      })
-      .catch((error) => {
-        actions.setSubmitting(false);
-        console.log(error);
-        Toast.errorMsg("Something went wrong");
-        window.scrollTo(0, 0);
-      });
+    props.updateConfig(apiId, apiData)
+     try {
+      actions.setSubmitting(false);
+      setStepNumber(0);
+      window.scrollTo(0, 0);
+      Toast.successMsg("Api updated successfully");
+      props.history.goBack();
+     } catch (error) {
+      actions.setSubmitting(false);
+      console.log(error);
+      Toast.errorMsg("Something went wrong");
+      window.scrollTo(0, 0);
+     }     
   };
 
   return (
@@ -98,4 +104,12 @@ const ApiEditPage = (props) => {
   );
 };
 
-export default ApiEditPage;
+const mapStateToProps = (state) => ({
+  api: state.api.apiRegistry,
+});
+const mapActionsToProps = {
+  getApibyId, updateConfig
+};
+
+export default connect(mapStateToProps, mapActionsToProps)(ApiEditPage);
+

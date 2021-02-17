@@ -4,7 +4,9 @@ import SockJsClient from "react-stomp";
 
 import JoinersTable from "./joiners-table/JoinersTable";
 import { env } from "../../../../env";
-import { getApibyId } from "../store/apiCrud";
+// import { getApibyId } from "../store/apiCrud";
+import { connect } from 'react-redux'
+import { getApibyId } from "../../../../store/api-registry/apiRegistryAction";
 
 const JoinersListPage = (props) => {
   const [joinerData, setJoinerData] = useState([]);
@@ -12,12 +14,15 @@ const JoinersListPage = (props) => {
   const [apiId, setApiId] = useState(props.match.params.id);
   let clientRef = useRef();
 
-  const getJoinersData = async () => {
+  const getJoinersData = () => {
     /* fetchJoinersData function Yet to be define */
-    const apiData = await getApibyId(apiId);
+    props.getApibyId(apiId).then((res) => {
+      setJoinerData([res.data]);
+      console.log(res.data)
+    })
     // const splittersData = await fetchJoinersData()
     // setAppQueueData(splittersData.data)
-    setJoinerData([apiData.data]);
+    // setJoinerData([apiData.data]);
   };
 
   const handleStatusUpdate = (data) => {
@@ -84,4 +89,11 @@ const JoinersListPage = (props) => {
   );
 };
 
-export default JoinersListPage;
+const mapStateToProps = (state) => ({
+  api: state.api.apiRegistry,
+});
+const mapActionsToProps = {
+  getApibyId
+};
+
+export default connect(mapStateToProps, mapActionsToProps)(JoinersListPage);
