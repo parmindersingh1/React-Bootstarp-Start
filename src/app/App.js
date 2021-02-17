@@ -29,12 +29,12 @@ class App extends Component {
     });
 
     return (
-      <Aux>
+      <Aux  data-test="test-app">
         <ScrollToTop>
-          <Suspense fallback={<Loader />}>
+          <Suspense fallback={<Loader />}  data-test="test-cache-loading">
             <Switch>
               {menu}
-              <Route path="/" component={AdminLayout} />
+              <Route path="/" component={AdminLayout} data-test="test-routes" />
             </Switch>
           </Suspense>
         </ScrollToTop>

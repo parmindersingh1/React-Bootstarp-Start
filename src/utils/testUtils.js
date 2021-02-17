@@ -1,5 +1,8 @@
 import { act } from "react-dom/test-utils";
 import { checkPropTypes } from "prop-types";
+import { configureStore } from "@reduxjs/toolkit";
+import { middleware } from "./../store";
+import { rootReducer } from "./../store/rootReducer";
 
 export const findByTestAttr = (component, attr) => {
     const wrapper = component.find(`[data-test='${attr}']`);
@@ -23,3 +26,16 @@ export async function waitForUpdateWrapper(wrapper) {
     wrapper.update();
   });
 }
+
+export const testStore = (initialState) => {
+  // const createStoreWithMiddleware = applyMiddleware(...middlewares)(createStore);
+  // return createStoreWithMiddleware(rootReducer, initialState);
+  return configureStore({
+    reducer: rootReducer,
+    middleware,
+    devTools: process.env.NODE_ENV !== "production",
+  });
+};
+
+export const setHookState = (newState) =>
+  jest.fn().mockImplementation((state) => [newState, (newState) => {}]);
